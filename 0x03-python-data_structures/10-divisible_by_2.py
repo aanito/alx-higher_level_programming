@@ -1,9 +1,7 @@
 #!/usr/bin/python3
-def max_integer(my_list=[]):
+def divisible_by_2(my_list=[]):
+    new_list = []
     if my_list:
-        max = my_list[0]
         for elm in my_list:
-            if elm > max:
-                max = elm
-        return max
-    return None
+            new_list.append(False if elm % 2 else True)
+    return new_list
