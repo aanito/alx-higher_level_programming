@@ -1,3 +1,9 @@
 #!/usr/bin/python3
-def square_matrix_map(matrix=[]):
-    return list(map((lambda row: list(map((lambda x: x * x), row))), matrix))
+def complex_delete(my_dict, value):
+    keys_to_del = []
+    for key in my_dict:
+        if my_dict[key] == value:
+            keys_to_del.append(key)
+    for key in keys_to_del:
+        del my_dict[key]
+    return my_dict
