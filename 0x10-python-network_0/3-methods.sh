@@ -1,4 +1,3 @@
 #!/bin/bash
-#List all the possible curl options or HTTP methods with hte URL
-
-curl -sI "$1" | grep 'Allow:' | sed -ne 's/^Allow: //p'
+# takes in a URL and displays all HTTP methods the server will accept
+curl -sI ALLOW $1 -L | grep "Allow" | cut -d " " -f2-
