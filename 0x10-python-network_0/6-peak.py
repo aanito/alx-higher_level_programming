@@ -1,18 +1,29 @@
 #!/usr/bin/python3
-"""Test function find_peak"""
 
 
 def find_peak(list_of_integers):
-    """finds a peak"""
 
-    new_l = list_of_integers
-    le = len(new_l)
-    if le == 0:
-        return
-    m = le // 2
-    if (m == le - 1 or new_l[m] >= new_l[m + 1]) and (m == 0 or new_l[m]
-                                                      >= new_l[m - 1]):
-        return new_l[m]
-    if m != le - 1 and new_l[m + 1] > new_l[m]:
-        return find_peak(new_l[m + 1:])
-    return find_peak(new_l[:m])
+    if list_of_integers is None or len(list_of_integers) == 0:
+        return None
+
+    if len(list_of_integers) == 1:
+        return list_of_integers[0]
+
+    mid_idx = int(len(list_of_integers) / 2)
+
+    if mid_idx != len(list_of_integers) - 1:
+        if list_of_integers[mid_idx - 1] < list_of_integers[mid_idx] and\
+           list_of_integers[mid_idx + 1] < list_of_integers[mid_idx]:
+            return list_of_integers[mid_idx]
+    else:
+        if list_of_integers[mid_idx - 1] < list_of_integers[mid_idx]:
+            return list_of_integers[mid_idx]
+        else:
+            return list_of_integers[mid_idx - 1]
+
+    if list_of_integers[mid_idx - 1] > list_of_integers[mid_idx]:
+        a_list = list_of_integers[0:mid_idx]
+    else:
+        a_list = list_of_integers[mid_idx + 1:]
+
+    return find_peak(a_list)
