@@ -1,19 +1,29 @@
 #!/usr/bin/python3
 """
-python script
+Get listed State in the command line
+and print
 """
-
 import MySQLdb
-from sys import argv
-
+import sys
 if __name__ == "__main__":
-    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
-                         passwd=argv[2], db=argv[3], charset="utf8")
-    cursor = db.cursor()
-    cursor.execute("SELECT cities.name FROM cities \
-    JOIN states ON cities.state_id = states.id WHERE states.name LIKE %s \
-    ORDER BY cities.id", (argv[4],))
-    rows = cursor.fetchall()
-    print(", ".join(city[0] for city in rows))
-    cursor.close()
-    db.close()
+    db = MySQLdb.connect(user=sys.argv[1],
+                         password=sys.argv[2], database=sys.argv[3])
+    c = db.cursor()
+    my_list = []
+    for i in sys.argv[4]:
+        if i == ";":
+            exit(1)
+    c.execute("""SELECT cities.name
+                FROM cities
+                JOIN states ON state_id = states.id
+                WHERE states.name = '{}'""".format(sys.argv[4]))
+    [my_list.append(i) for i in c.fetchall()]
+    length = len(my_list)
+    if length != 0:
+        for i in range(len(my_list)):
+            if i != length - 1:
+                print("{}, ".format(my_list[i][0]), end="")
+            else:
+                print("{}".format(my_list[i][0]))
+    else:
+        print()
